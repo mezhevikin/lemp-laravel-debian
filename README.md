@@ -232,7 +232,7 @@
     ```
 * Install cerbot
 
-     ```
+    ```
     sudo apt install snapd
     sudo snap install core; sudo snap refresh core
     sudo snap install --classic certbot
@@ -240,6 +240,17 @@
     sudo certbot certonly --nginx
     sudo service nginx reload
     ```
+*
+
+## Helpful commands
+
+`sudo etc/init.d/php8.0-fpm restart` - restart php
+
+`sudo service nginx reload` - restart nginx
+
+`sudo systemctl restart mariadb.service` - restart mariadb
+
+`sudo certbot certonly --nginx` - create lets encrypt certificate
 
 
 
