@@ -24,7 +24,6 @@
     ```
     sudo apt install nginx
     ```
-* Open http://11.11.111.111/ to test Nginx
 
 * Install MariaDB
 
