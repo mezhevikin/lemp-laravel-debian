@@ -97,18 +97,12 @@
     git clone https://github.com/name/example.git example
     ```
 
-## [Only for private repo]
+* **If you have private repo**, then [create github token](https://github.com/settings/tokens) and enter it instead of password.
 
-* [Create github token](https://github.com/settings/tokens) and enter it instead of password.
-
-    ```sh
-    cd /var/www/example
-    ```
     To save token for next time
     ```sh
-    git config credential.helper store && git pull
-    ```
-## [/Only for private repo]    
+    git config --global credential.helper store
+    ```  
 
 * Install composer 
 
@@ -138,11 +132,26 @@
     DB_USERNAME=user
     DB_PASSWORD=password
     ```
+
+* Set permissions to directories
+
+    ```sh
+    sudo chown -R www-data.www-data /var/www/example
+    sudo chown -R www-data.www-data /var/www/example/storage
+    sudo chown -R www-data.www-data /var/www/example/bootstrap/cache
+    ```
+
 * Migrate db
 
     ```sh
     php artisan migrate
     ```
+* If you need import existings sql dump:
+
+    ```sh
+    mariadb -uroot database -p < /var/www/example.sql
+    ```
+
 * Add nginx config to `/etc/nginx/sites-available`
 
     ```sh
@@ -151,7 +160,7 @@
     ```sh
     server {
         listen 80;
-        server_name server_domain_or_IP;
+        server_name example.com;
         root /var/www/example/public;
 
         add_header X-Frame-Options "SAMEORIGIN";
@@ -183,6 +192,59 @@
         }
     }
     ```
+
+* Enable your Nginx config
+
+    ```sh
+    sudo ln -s /etc/nginx/sites-available/example.com.conf /etc/nginx/sites-enabled/
+    ```
+* Test nginx config
+
+    ```sh
+    nginx -t
+    ```
+* Reload nginx
+
+    ```sh
+    service nginx reload
+    ```
+* Install node.js and npm
+
+    ```sh
+    curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
+    apt-get install -y nodejs
+    ```
+
+    ```sh
+    cd /var/www/example
+    npm install
+    npm run prod
+    ```
+* Add cron task
+
+    ```sh
+    crontab -l | { cat; echo "* * * * * php /var/www/example/artisan schedule:run >> /dev/null 2>&1"; } | crontab -
+    ```
+* Check cron file
+
+     ```sh
+    more /var/spool/cron/crontabs/root
+    ```
+* Install cerbot
+
+     ```sh
+    sudo apt install snapd
+    sudo snap install core; sudo snap refresh core
+    sudo snap install --classic certbot
+    sudo ln -s /snap/bin/certbot /usr/bin/certbot
+    sudo certbot certonly --nginx
+    ```
+
+
+
+
+
+
 
 
 
