@@ -237,7 +237,6 @@
     sudo snap install --classic certbot
     sudo ln -s /snap/bin/certbot /usr/bin/certbot
     sudo certbot certonly --nginx
-    sudo service nginx reload
     ```
 
 ## Helpful commands
