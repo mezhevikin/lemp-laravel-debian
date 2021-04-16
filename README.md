@@ -240,7 +240,6 @@
     sudo certbot certonly --nginx
     sudo service nginx reload
     ```
-*
 
 ## Helpful commands
 
