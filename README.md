@@ -250,7 +250,7 @@
 
 `sudo certbot certonly --nginx` - create lets encrypt certificate
 
-
+`tar -cvpzf /backup.tar.gz --exclude=/backup.tar.gz --one-file-system /` - create system backup to zip archive
 
 
 
